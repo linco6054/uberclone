@@ -12,15 +12,15 @@ function Home() {
         <Card className="homeCard" style={{ maxWidth: "500px" }}>
           <Card.Title>
             <Row className="text-center mt-2">
-              <div className="col-sm-4">
+              <div className="col-4">
                 Grab Coffee
                 <p>{Coffee}</p>
               </div>
-              <div className="col-sm-4">
+              <div className="col-4">
                 Grab Coffee
                 <p>{Coffee}</p>
               </div>
-              <div className="col-sm-4">
+              <div className="col-4">
                 Grab Coffee
                 <p>{Coffee}</p>
               </div>
@@ -34,7 +34,9 @@ function Home() {
             <Button className="mt-3 mb-3 btx" variant="dark">
               <Link to="/Signup">Sign Up To Drive</Link>
             </Button>
-            <Card.Footer>Learn more about driving and delivering</Card.Footer>
+            <Card.Footer>
+              <small>Learn more about driving and delivering</small>
+            </Card.Footer>
           </Card.Body>
         </Card>
       </Container>

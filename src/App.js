@@ -6,6 +6,8 @@ import Home from "./routes/Home/Home";
 import About from "./routes/About/About";
 import Login from "./routes/Login/Login";
 import Signup from "./routes/Signup/Signup";
+
+import Profile from "./Backend/Profile/Profile";
 import Forgotpassword from "./routes/Forgotpassword/Forgotpassword";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
@@ -18,6 +20,9 @@ function App() {
         <Route path="/Login" exact component={Login} />
         <Route path="/Signup" exact component={Signup} />
         <Route path="/Forgot-Password" exact component={Forgotpassword} />
+
+        <Route path="/backend" exact component={Profile} />
+        {/* backend */}
       </Switch>
       <Footer />
     </Router>
