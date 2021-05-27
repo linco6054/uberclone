@@ -41,7 +41,7 @@ body {
 .HomeBg {
   height: 100vh;
   background-size: cover;
-  background-image: url(./Assets/Images/car.jpg);
+  background-image: url(./Assets/Images/home.jpg);
 }
 .HomecardBody {
   background-color: rgb(231, 231, 231);
@@ -55,6 +55,8 @@ body {
   text-decoration: none;
   color: white;
 }
+
+
 
 @media screen and (max-width: 768px) {
   /* media query mobile phones */
