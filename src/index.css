@@ -56,12 +56,7 @@ body {
   color: white;
 }
 
-/* left side nav */
-.leftsideNav {
-  min-height: 100vh;
-  background-size: cover;
-  background-image: url(../src/Assets/Images/car.jpg);
-}
+
 
 @media screen and (max-width: 768px) {
   /* media query mobile phones */

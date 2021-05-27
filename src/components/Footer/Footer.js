@@ -7,7 +7,7 @@ function Footer() {
     <Navbar bg="light" fixed="bottom">
       <Container>
         <Navbar.Brand>Uberx Clone</Navbar.Brand>
-        <p>© {thisYear} Uber Technologies Inc.</p>
+        <p className="mt-2">© {thisYear} Uber Technologies Inc.</p>
       </Container>
     </Navbar>
   );

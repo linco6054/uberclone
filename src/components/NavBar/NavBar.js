@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 
 function Footer() {
   return (
@@ -19,6 +19,17 @@ function Footer() {
             <Nav.Link>
               <Link to="/About">About</Link>
             </Nav.Link>
+            <NavDropdown title="Profile" id="basic-nav-dropdown">
+              <NavDropdown.Item>messages</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                <Link to="/Forgot-Password">Forgot Password</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">
+                <Link to="/backend">Side Nav</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">help</NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link>
               <Link to="/Signup">
                 <button className="signUp">Sign-Up</button>
