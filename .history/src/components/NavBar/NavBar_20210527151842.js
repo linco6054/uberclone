@@ -25,7 +25,7 @@ function Footer() {
                 <Link to="/Forgot-Password">Forgot Password</Link>
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">
-                <Link to="/home">Side Nav</Link>
+                <Link to="/backend">Side Nav</Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">help</NavDropdown.Item>
