@@ -32,3 +32,26 @@ body {
 .card {
   border: none;
 }
+
+/* home page */
+.Homefirst {
+  display: flex;
+  flex-direction: column;
+}
+.HomeBg {
+  height: 100vh;
+  background-size: cover;
+  background-image: url(./Assets/Images/home.jpg);
+}
+.HomecardBody {
+  background-color: rgb(231, 231, 231);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  align-items: flex-start;
+}
+.btx a {
+  text-decoration: none;
+  color: white;
+}

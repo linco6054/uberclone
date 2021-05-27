@@ -1,11 +1,15 @@
 import React from "react";
 
+import { Navbar, Container } from "react-bootstrap";
 function Footer() {
+  const thisYear = new Date().getFullYear();
   return (
-    <div>
-      <h1>man</h1>
-      <h2>hey</h2>
-    </div>
+    <Navbar bg="light" fixed="bottom">
+      <Container>
+        <Navbar.Brand>Uberx Clone</Navbar.Brand>
+        <p>© {thisYear} Uber Technologies Inc.</p>
+      </Container>
+    </Navbar>
   );
 }
 

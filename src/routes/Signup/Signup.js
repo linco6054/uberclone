@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
 function Signup() {
+  document.title = "Sign-Up";
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
@@ -42,7 +43,7 @@ function Signup() {
               <Form.Control required type="password" placeholder="Password" />
             </Form.Group>
 
-            <Button className="mt-4" type="submit">
+            <Button variant="dark" className="mt-4" type="submit">
               Sign Up
             </Button>
           </Form>

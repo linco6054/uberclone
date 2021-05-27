@@ -33,7 +33,7 @@ function Login() {
             <Form.Group className="mt-2" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Remember Me" />
             </Form.Group>
-            <Button className="mt-3" type="submit">
+            <Button variant="dark" className="mt-3" type="submit">
               Log In
             </Button>
           </Form>
