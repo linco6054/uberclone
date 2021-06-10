@@ -37,6 +37,7 @@ function Signup() {
       const sName = lNameRef.current.value;
 
       setLoading(true);
+
       auth
         .createUserWithEmailAndPassword(
           EmailRef.current.value,
@@ -44,25 +45,25 @@ function Signup() {
         )
         .then((userCred) => {
           const user = userCred.user;
-
-          db.collection("Users").add({
-            FirstName: fname,
-            SecondName: sName,
-            emailId: email,
-            userId: user.uid,
-            userType: "user",
-            ClientType: clientType,
-          });
+          db.collection("Users")
+            .doc(user.uid)
+            .set({
+              FirstName: fname,
+              SecondName: sName,
+              emailId: email,
+              userId: user.uid,
+              userType: "user",
+              ClientType: clientType,
+            })
+            .then(function () {
+              console.log("Value successfully written!");
+              setLoading(false);
+              history.push("/Home");
+            })
+            .catch(function (error) {
+              console.error("Error writing Value: ", error);
+            });
         });
-      // add data to db
-
-      // db.collection("Users").add({
-      //   FirstName: fNameRef.current.value,
-      //   SecondName: lNameRef.current.value,
-      //   email: EmailRef.current.value,
-      //   userId: currentUser.uid,
-      //   userType: "user",
-      // });
 
       history.push("/Home");
     } catch {
@@ -148,7 +149,7 @@ function Signup() {
                 <div className="form-check">
                   <input
                     value="Customer"
-                    onClick={(e) => setClientType(e.target.value)}
+                    onChange={(e) => setClientType(e.target.value)}
                     className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
@@ -167,7 +168,7 @@ function Signup() {
                     className="form-check-input"
                     type="radio"
                     value="Driver"
-                    onClick={(e) => setClientType(e.target.value)}
+                    onChange={(e) => setClientType(e.target.value)}
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
                   />

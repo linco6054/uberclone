@@ -13,38 +13,30 @@ function Footer() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto navLinks w-100 justify-content-end">
-            <Nav.Link>
-              <Link to="/">Home</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to="/About">About</Link>
-            </Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/About">About</Nav.Link>
             <NavDropdown
               className={!currentUser && "d-none"}
               title="Profile"
               id="basic-nav-dropdown"
             >
-              <NavDropdown.Item>messages</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                <Link to="/Forgot-Password">Forgot Password</Link>
+              <NavDropdown.Item href="/Update-Profile">
+                messages
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">
-                <Link to="/home">Side Nav</Link>
+              <NavDropdown.Item href="/Forgot-Password">
+                Forgot Password
               </NavDropdown.Item>
+              <NavDropdown.Item href="/home">Side Nav</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={async () => await logout()}>
                 Log Out
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link className={currentUser && "d-none"}>
-              <Link to="/Signup">
-                <button className="signUp">Sign-Up</button>
-              </Link>
+            <Nav.Link href="/Signup" className={currentUser && "d-none"}>
+              <button className="signUp">Sign-Up</button>
             </Nav.Link>
-            <Nav.Link className={currentUser && "d-none"}>
-              <Link to="/Login">
-                <button className="login">Login</button>
-              </Link>
+            <Nav.Link href="/Login" className={currentUser && "d-none"}>
+              <button className="login">Login</button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
