@@ -1,11 +1,29 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+
 import { Card, Container, Row, Button } from "react-bootstrap";
 // font awesome <i class="fa-solid " />
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 function Home() {
   const Coffee = <FontAwesomeIcon icon={faCoffee} size="2x" />;
+  // const [users, setUsers] = useState([]);
+
+  // useEffect(() => {
+  //   db.collection("Users")
+  //     .get()
+  //     .then((snapshot) => {
+  //       console.log(snapshot);
+  //       snapshot.forEach((doc) => {
+  //         const data = doc.data();
+  //         // const allUsers = [];
+  //         // allUsers.push(data);
+  //         setUsers([...users, data]);
+  //       });
+  //     })
+  //     .catch(console.log("error"));
+  // }, []);
+  //console.log(users);
   return (
     <div className=" HomeBg d-flex justify-content-end align-items-center w-100 ">
       <Container className="mb-6 flex-end ">
@@ -44,4 +62,14 @@ function Home() {
   );
 }
 
+// const Populate = ({ emailId, SecondName, FirstName }) => {
+//   return (
+//     <ul>
+//       <li className="text_colour">{emailId}</li>
+//       <li>
+//         {FirstName} <span>{SecondName}</span>
+//       </li>
+//     </ul>
+//   );
+// };
 export default Home;

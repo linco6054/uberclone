@@ -32,13 +32,7 @@ function BackendHome() {
     </div>
   );
 
-  // return (
-  //   <div   ">
-  //     <>
-  //
-  //     </>
-  //   </div>
-  // );
+  
 }
 
 export default BackendHome;

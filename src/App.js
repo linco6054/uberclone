@@ -6,26 +6,29 @@ import Home from "./routes/Home/Home";
 import About from "./routes/About/About";
 import Login from "./routes/Login/Login";
 import Signup from "./routes/Signup/Signup";
-
+import PrivateRoute from "./components/PrivateRoute";
 import BackendHome from "./Backend/Home/BackendHome";
 import Forgotpassword from "./routes/Forgotpassword/Forgotpassword";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 function App() {
   return (
-    <Router>
-      <NavBar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/About" exact component={About} />
-        <Route path="/Login" exact component={Login} />
-        <Route path="/Signup" exact component={Signup} />
-        <Route path="/Forgot-Password" exact component={Forgotpassword} />
+    <AuthProvider>
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/About" exact component={About} />
+          <Route path="/Login" exact component={Login} />
+          <Route path="/Signup" exact component={Signup} />
+          <Route path="/Forgot-Password" exact component={Forgotpassword} />
 
-        <Route path="/Home" exact component={BackendHome} />
-        {/* backend */}
-      </Switch>
-      <Footer />
-    </Router>
+          <PrivateRoute path="/Home" exact component={BackendHome} />
+          {/* backend */}
+        </Switch>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 }
 
