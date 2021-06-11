@@ -10,7 +10,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import BackendHome from "./Backend/Home/BackendHome";
 import Forgotpassword from "./routes/Forgotpassword/Forgotpassword";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import UpdateProfile from "./Backend/Profile/UpdateProfile";
+import UpdateEmail from "./Backend/Profile/UpdateEmail";
+import Profile from "./Backend/Profile/Profile";
 import { AuthProvider } from "./context/AuthContext";
 function App() {
   return (
@@ -23,11 +24,9 @@ function App() {
           <Route path="/Login" exact component={Login} />
           <Route path="/Signup" exact component={Signup} />
           <Route path="/Forgot-Password" exact component={Forgotpassword} />
-          <PrivateRoute
-            path="/Update-Profile"
-            exact
-            component={UpdateProfile}
-          />
+
+          <PrivateRoute path="/Update-Email" exact component={UpdateEmail} />
+          <PrivateRoute path="/Update-Profile" exact component={Profile} />
           <PrivateRoute path="/Home" exact component={BackendHome} />
           {/* backend */}
         </Switch>

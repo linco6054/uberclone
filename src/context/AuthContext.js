@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "./../firebase";
+import React, { useReducer, useContext, useState, useEffect } from "react";
+import { reducer } from "./reducer";
+import { auth, db } from "./../firebase";
 const AuthContext = React.createContext();
 export function useAuth() {
   return useContext(AuthContext);
 }
 export function AuthProvider({ children }) {
-  const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
   // login to page
   const loginUser = (email, password) => {
@@ -28,16 +28,42 @@ export function AuthProvider({ children }) {
   function updatePassword(password) {
     return currentUser.updatePassword(password);
   }
+  // collect logged in user info
+  useEffect(() => {
+    if (currentUser) {
+      db.collection("Users")
+        .doc(currentUser.uid)
+        .get()
+        .then((querySnapshot) => {
+          const response = querySnapshot.data();
+          dispatch({ type: "UpdateUser", payload: response });
+        });
+    }
+  }, [currentUser]);
   //   set our current user to user
   useEffect(() => {
     const unsubscriber = auth.onAuthStateChanged((user) => {
+      dispatch({ type: "UpdateUser", payload: user });
       setCurrentUser(user);
-      setLoading(false);
+      dispatch({ type: "NotLoading" });
     });
     return unsubscriber;
   }, []);
-
+  const closeModal = () => {
+    dispatch({ type: "CloseModal" });
+  };
+  const defaultValues = {
+    loading: true,
+    currentUserInfo: [],
+    error: "",
+    message: "",
+  };
+  const [state, dispatch] = useReducer(reducer, defaultValues);
   const value = {
+    closeModal,
+    state,
+    db,
+    dispatch,
     updateEmail,
     updatePassword,
     currentUser,
@@ -48,7 +74,7 @@ export function AuthProvider({ children }) {
   };
   return (
     <AuthContext.Provider value={value}>
-      {!loading ? children : null}
+      {!state.loading ? children : null}
     </AuthContext.Provider>
   );
 }

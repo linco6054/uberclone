@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { db, auth } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
+import MessageHandler from "../../components/MessageHandler/MessageHandler";
+
 import {
   Container,
   Card,
@@ -21,17 +24,25 @@ function Signup() {
 
   const [clientType, setClientType] = useState("Customer");
 
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const { dispatch, state } = useAuth();
   console.log(clientType);
+  const errorHandler = () => {
+    dispatch({ type: "RemoveMessage" });
+    dispatch({
+      type: "AddError",
+      payload: "Error ! Password do not match",
+    });
+  };
   function handleSubmit(e) {
     e.preventDefault();
     if (conPasswordRef.current.value !== passwordRef.current.value) {
-      return setError("Password do not match");
+      return errorHandler();
     }
     try {
-      setError("");
+      dispatch({ type: "RemoveErrpr" });
       const fname = fNameRef.current.value;
       const email = EmailRef.current.value;
       const sName = lNameRef.current.value;
@@ -67,7 +78,11 @@ function Signup() {
 
       history.push("/Home");
     } catch {
-      setError("Failed to sign in");
+      dispatch({ type: "RemoveMessage" });
+      dispatch({
+        type: "AddError",
+        payload: "Error! Failed to sign in",
+      });
     }
     setLoading(false);
   }
@@ -85,7 +100,16 @@ function Signup() {
         <Card.Title className="text-center">
           <h1>Sign Up</h1>
           <Container>
-            {error ? <Alert variant="danger">{error}</Alert> : null}
+            {state.error || state.message ? (
+              <Alert variant={state.error ? `danger` : "success"}>
+                {
+                  <MessageHandler
+                    message={state.error ? state.error : state.message}
+                    dispatch={dispatch}
+                  ></MessageHandler>
+                }
+              </Alert>
+            ) : null}
           </Container>
         </Card.Title>
         <Card.Body>
@@ -94,6 +118,7 @@ function Signup() {
               <Form.Group as={Col}>
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
+                  required
                   ref={fNameRef}
                   type="text"
                   placeholder="First Name"
@@ -103,6 +128,7 @@ function Signup() {
               <Form.Group as={Col}>
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
+                  required
                   ref={lNameRef}
                   type="text"
                   placeholder="Last Name"
@@ -112,8 +138,8 @@ function Signup() {
             <Form.Group className="mb-2">
               <Form.Label id="email">Email</Form.Label>
               <Form.Control
-                ref={EmailRef}
                 required
+                ref={EmailRef}
                 type="email"
                 placeholder="Please enter your email address"
               />

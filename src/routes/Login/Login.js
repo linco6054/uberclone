@@ -2,23 +2,27 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
+import MessageHandler from "../../components/MessageHandler/MessageHandler"
 function Login() {
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { loginUser } = useAuth();
+  const { loginUser, dispatch, state } = useAuth();
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      setError("");
+      dispatch({ type: "RemoveErrpr" });
       setLoading(true);
       await loginUser(emailRef.current.value, passwordRef.current.value);
       history.push("/Home");
     } catch {
-      setError("Failed to log in");
+      dispatch({ type: "RemoveMessage" });
+      dispatch({
+        type: "AddError",
+        payload: "Error ! Failed to log in",
+      });
     }
     setLoading(false);
   }
@@ -35,7 +39,18 @@ function Login() {
       >
         <Card.Title className="text-center">
           <h1>Log In</h1>
-          {error && <Alert variant="danger">{error}</Alert>}
+          <Container>
+            {state.error || state.message ? (
+              <Alert variant={state.error ? `danger` : "success"}>
+                {
+                  <MessageHandler
+                    message={state.error ? state.error : state.message}
+                    dispatch={dispatch}
+                  ></MessageHandler>
+                }
+              </Alert>
+            ) : null}
+          </Container>
         </Card.Title>
         <Card.Body>
           <Form onSubmit={handleSubmit}>

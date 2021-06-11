@@ -1,34 +1,61 @@
 import React, { useRef, useState } from "react";
+import MessageHandler from "../../components/MessageHandler/MessageHandler";
 import { Link } from "react-router-dom";
+import { db } from "../../firebase";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
-import MessageHandler from "../../components/MessageHandler/MessageHandler";
-function Forgotpassword() {
-  const [loading, setLoading] = useState(false);
-  const { resetPassword, state, dispatch } = useAuth();
-  const emailRef = useRef();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch({ type: "RemoveMessage" });
-      dispatch({ type: "RemoveErrpr" });
-      setLoading(true);
-      await resetPassword(emailRef.current.value);
 
-      dispatch({ type: "RemoveErrpr" });
-      dispatch({
-        type: "AddMessage",
-        payload: "Check your email inbox for password reset instruction",
-      });
-    } catch {
-      dispatch({ type: "RemoveMessage" });
-      dispatch({
-        type: "AddError",
-        payload: `Error ! An account with ${emailRef.current.value} does not exist`,
-      });
-    }
-    setLoading(false);
+function UpdateEmail() {
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+
+  const { currentUser, updateEmail, state, dispatch } = useAuth();
+  const errorHanler = () => {
+    dispatch({ type: "RemoveMessage" });
+    dispatch({
+      type: "AddError",
+      payload: "Error ! this Email exists in your account ",
+    });
+    return;
   };
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (email) {
+      dispatch({ type: "RemoveMessage" });
+      dispatch({ type: "RemoveErrpr" });
+
+      setLoading(true);
+
+      db.collection("Users")
+        .doc(currentUser.uid)
+        .update({
+          emailId: email,
+        })
+        .then(function () {
+          if (email !== currentUser.email) {
+            updateEmail(email);
+          }
+
+          console.log("Email successfully updated!");
+          dispatch({ type: "RemoveErrpr" });
+          dispatch({
+            type: "AddMessage",
+            payload: "Email successfully updated",
+          });
+        })
+        .catch(function (error) {
+          console.error("Error updating document: ", error);
+          dispatch({ type: "RemoveMessage" });
+          dispatch({
+            type: "AddError",
+            payload: "Error ! Your email Not been Updated",
+          });
+        });
+    }
+
+    return errorHanler();
+  }
+
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
@@ -41,7 +68,7 @@ function Forgotpassword() {
         style={{ maxWidth: "400px" }}
       >
         <Card.Title className="text-center">
-          <h2 className="mt-3">Rest Your Password</h2>
+          <h3 className="mt-3">Update Email Address</h3>
           <Container>
             {state.error || state.message ? (
               <Alert variant={state.error ? `danger` : "success"}>
@@ -60,12 +87,14 @@ function Forgotpassword() {
             <Form.Group className="mb-2">
               <Form.Label id="email">Email</Form.Label>
               <Form.Control
-                ref={emailRef}
                 required
+                onChange={(e) => setEmail(e.target.value)}
+                defaultValue={currentUser.email}
                 type="email"
                 placeholder="Please enter your email address"
               />
             </Form.Group>
+
             <Button
               disabled={loading}
               variant="dark"
@@ -78,8 +107,7 @@ function Forgotpassword() {
         </Card.Body>
         <Card.Footer>
           <p className="blockquote-footer mt-2">
-            Need an account? <Link to="signup">Sign Up</Link> &nbsp; &nbsp; Go
-            to? <Link to="/Login">Log-In</Link>
+            <Link to="/Home">Cancel?</Link>
           </p>
         </Card.Footer>
       </Card>
@@ -87,4 +115,4 @@ function Forgotpassword() {
   );
 }
 
-export default Forgotpassword;
+export default UpdateEmail;
